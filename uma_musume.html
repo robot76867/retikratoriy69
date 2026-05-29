@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Uma Musume</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<div class="header">
+
+<a href="index.html">
+
+<img src="img/logo.png" class="logo">
+
+</a>
+
+<h1>QuizEx</h1>
+
+</div>
+
+<div class="question">
+
+<h2>
+Кто ты из Uma Musume?
+</h2>
+
+<div id="quiz">
+
+<h3 id="q"></h3>
+
+<div id="answers"></div>
+
+</div>
+
+<div class="result">
+
+<h2 id="result"></h2>
+
+    <img id="resultImg" width="300">
+
+    <br><br>
+
+    <button onclick="location.href='uma_musume.html'">
+
+    Пройти заново
+
+    </button>
+
+</div>
+
+</div>
+
+<script>
+
+let questions = [
+
+{
+    q:"Что тебе нравится делать?",
+    a:[
+        ["Побеждать","teio"],
+        ["Спать","sky"],
+        ["Веселиться","special"]
+    ]
+},
+
+{
+    q:"Какой ты в компании?",
+    a:[
+        ["Главный","teio"],
+        ["Весёлый","special"],
+        ["Спокойный","sky"]
+    ]
+},
+
+{
+    q:"Как ты учишься?",
+    a:[
+        ["Быстро","teio"],
+        ["Лениво","sky"],
+        ["Стараюсь","special"]
+    ]
+},
+
+{
+    q:"Что тебе ближе?",
+    a:[
+        ["Скорость","teio"],
+        ["Хитрость","sky"],
+        ["Дружба","special"]
+    ]
+},
+
+{
+    q:"Какой у тебя характер?",
+    a:[
+        ["Уверенный","teio"],
+        ["Расслабленный","sky"],
+        ["Добрый","special"]
+    ]
+},
+
+{
+    q:"Что выберешь?",
+    a:[
+        ["Бег","teio"],
+        ["Сон","sky"],
+        ["Еду","special"]
+    ]
+},
+
+{
+    q:"Как реагируешь на поражение?",
+    a:[
+        ["Тренируюсь ещё","teio"],
+        ["Да пофиг","sky"],
+        ["Грущу","special"]
+    ]
+}
+
+]
+
+let count = {
+
+    teio:0,
+
+    sky:0,
+
+    special:0
+
+}
+
+let index = 0
+
+function show(){
+
+    if(index >= questions.length){
+
+        finish()
+
+        return
+    }
+
+    let q = questions[index]
+
+    document.getElementById("q").innerText = q.q
+
+    let answers = document.getElementById("answers")
+
+    answers.innerHTML = ""
+
+    q.a.forEach(function(ans){
+
+        let btn = document.createElement("button")
+
+        btn.innerText = ans[0]
+
+        btn.onclick = function(){
+
+            count[ans[1]]++
+
+            index++
+
+            show()
+
+        }
+
+        answers.appendChild(btn)
+
+    })
+
+}
+
+function finish(){
+
+    let max = 0
+
+    let who = ""
+
+    for(let key in count){
+
+        if(count[key] > max){
+
+            max = count[key]
+
+            who = key
+
+        }
+
+    }
+
+    if(who == "teio"){
+
+        window.location.href = "teio.html"
+
+    }
+
+    if(who == "sky"){
+
+        window.location.href = "sky.html"
+
+    }
+
+    if(who == "special"){
+
+        window.location.href = "special.html"
+
+    }
+
+}
+
+function restartQuiz(){
+
+    count = {
+
+        teio:0,
+
+        sky:0,
+
+        special:0
+
+    }
+
+    index = 0
+
+    document.getElementById("quiz").style.display = "block"
+
+    document.getElementById("result").innerText = ""
+
+    document.getElementById("resultImg").src = ""
+
+    show()
+
+}
+
+show()
+
+</script>
+
+</body>
+</html>

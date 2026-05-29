@@ -1,0 +1,210 @@
+<!-- ========================= -->
+<!-- temperament.html -->
+<!-- ========================= -->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Темперамент</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="header">
+
+<a href="index.html">
+    <img src="img/logo.png" class="logo">
+</a>
+
+<h1>QuizEx</h1>
+
+</div>
+
+<div class="question">
+
+<h2>
+    Какой у тебя темперамент?
+</h2>
+
+<div id="quiz">
+
+<h3 id="q"></h3>
+
+<div id="answers"></div>
+
+</div>
+
+<div class="result">
+
+    <h2 id="result"></h2>
+
+    <img id="resultImg" width="300">
+
+    <br><br>
+
+    <button onclick="location.href='temperament.html'">
+
+    Пройти заново
+
+    </button>
+
+</div>
+
+</div>
+
+<script>
+
+let questions = [
+
+{
+    q:"Что ты делаешь на вечеринке?",
+    a:[
+        ["Общаюсь со всеми","s"],
+        ["Сижу спокойно","f"],
+        ["Бешусь и шумлю","h"],
+        ["Стою в стороне","m"]
+    ]
+},
+
+{
+    q:"Как ты реагируешь на проблемы?",
+    a:[
+        ["Паникую","m"],
+        ["Решаю быстро","h"],
+        ["Шучу","s"],
+        ["Спокойно думаю","f"]
+    ]
+},
+
+{
+    q:"Какой ты обычно?",
+    a:[
+        ["Весёлый","s"],
+        ["Тихий","m"],
+        ["Спокойный","f"],
+        ["Вспыльчивый","h"]
+    ]
+}
+
+]
+
+let count = {
+    s:0,
+    m:0,
+    h:0,
+    f:0
+}
+
+let index = 0
+
+function show(){
+
+    if(index >= questions.length){
+
+        finish()
+
+        return
+    }
+
+    let q = questions[index]
+
+    document.getElementById("q").innerText = q.q
+
+    let answers = document.getElementById("answers")
+
+    answers.innerHTML = ""
+
+    q.a.forEach(function(ans){
+
+        let btn = document.createElement("button")
+
+        btn.innerText = ans[0]
+
+        btn.onclick = function(){
+
+            count[ans[1]]++
+
+            index++
+
+            show()
+
+        }
+
+        answers.appendChild(btn)
+
+    })
+
+}
+
+function finish(){
+
+    let max = 0
+
+    let type = ""
+
+    for(let key in count){
+
+        if(count[key] > max){
+
+            max = count[key]
+
+            type = key
+
+        }
+
+    }
+
+    if(type == "s"){
+
+        window.location.href = "s.html"
+
+    }
+
+    if(type == "m"){
+
+        window.location.href = "m.html"
+
+    }
+
+    if(type == "f"){
+
+        window.location.href = "f.html"
+
+    }
+
+    if(type == "h"){
+
+        window.location.href = "h.html"
+
+    }
+
+}
+
+function restartQuiz(){
+
+    count = {
+        s:0,
+        m:0,
+        h:0,
+        f:0
+    }
+
+    index = 0
+
+    document.getElementById("quiz").style.display = "block"
+
+    document.getElementById("result").innerText = ""
+
+    document.getElementById("resultImg").src = ""
+
+    show()
+
+}
+
+show()
+
+</script>
+
+</body>
+</html>
